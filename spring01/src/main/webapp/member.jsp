@@ -7,7 +7,14 @@
 <title>member</title>
 </head>
 <body>
-<h3>회원가입 화면입니다. </h3>
+<h3>로그인 화면입니다.</h3>
+<form action="login" method="get">
+	id : <input name="id" value="apple"><br>
+	pw : <input name="pw" value="1234"><br>
+	<button type="submit">서버로 전송</button>
+</form>
+<hr color="red">
+<h3>회원가입 화면입니다.</h3>
 <form action="insert" method="get">
 	id : <input name="id" value="apple"><br>
 	pw : <input name="pw" value="1234"><br>
@@ -16,20 +23,20 @@
 	<button type="submit">서버로 전송</button>
 </form>
 <hr color="red">
-<h3>회원수정 화면입니다. </h3>
+<h3>회원수정 화면입니다.</h3>
 <form action="update" method="get">
 	id : <input name="id" value="apple"><br>
 	tel : <input name="tel" value="9999"><br>
 	<button type="submit">서버로 전송</button>
 </form>
 <hr color="red">
-<h3>회원탈퇴 화면입니다. </h3>
+<h3>회원탈퇴 화면입니다.</h3>
 <form action="delete" method="get">
 	id : <input name="id" value="apple"><br>
 	<button type="submit">서버로 전송</button>
 </form>
 <hr color="red">
-<h3>회원검색 화면입니다. </h3>
+<h3>회원검색 화면입니다.</h3>
 <form action="one" method="get">
 	id : <input name="id" value="apple"><br>
 	<button type="submit">서버로 전송</button>

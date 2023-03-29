@@ -12,10 +12,6 @@ body {
 </style>
 </head>
 <body>
-게시물 검색 처리 요청이 완료되었습니다.<br>
-no: ${bag.no}<br>
-title: ${bag.title}<br>
-content: ${bag.content}<br>
-writer: ${bag.writer}<br>
+북마크 수정이 완료되었습니다.
 </body>
 </html>

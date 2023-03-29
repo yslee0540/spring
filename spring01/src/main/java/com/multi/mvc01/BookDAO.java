@@ -8,17 +8,15 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-//dao 싱글톤으로 하나만 만들어서 사용하도록 설정
-//2가지 방법 - 어노테이션(표시), xml
-
 @Component
-public class MemberDAO {
-//특정한 방법으로 실행하는 클래스(model, 방법)
-	public ArrayList<MemberVO> list() {
+public class BookDAO {
+	
+	public ArrayList<BookVO> list() {
 		ResultSet rs = null;
 		
-		ArrayList<MemberVO> list = new ArrayList<>();
-		MemberVO bag = null;
+		//가방들 넣어줄 큰 컨테이너 역할
+		ArrayList<BookVO> list = new ArrayList<>();
+		BookVO bag = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("1. mySQL과 자바 연결할 부품 설정 성공");
@@ -29,24 +27,20 @@ public class MemberDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "select * from member";
+			String sql = "select * from book";
 			PreparedStatement ps = con.prepareStatement(sql);
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			rs = ps.executeQuery();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
 			while (rs.next()) { //검색결과가 있는지 여부
-				//System.out.println("검색결과 있음");
-				String id2 = rs.getString(1);
-				String pw = rs.getString(2);
-				String name = rs.getString(3);
-				String tel = rs.getString(4);
+				System.out.println("검색결과 있음");
 				
-				bag = new MemberVO();
-				bag.setId(id2);
-				bag.setPw(pw);
-				bag.setName(name);
-				bag.setTel(tel);
+				bag = new BookVO();
+				bag.setId(rs.getInt("id"));
+				bag.setName(rs.getString("name"));
+				bag.setUrl(rs.getString("url"));
+				bag.setImg(rs.getString("img"));
 				
 				list.add(bag);
 			}
@@ -56,40 +50,10 @@ public class MemberDAO {
 		}
 		return list;
 	}
-
-	public int login(MemberVO bag) {
-		int result = 0;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("1. mySQL과 자바 연결할 부품 설정 성공");
-			
-			String url = "jdbc:mysql://localhost:3306/multi?serverTimezone=UTC";
-			String user = "root";
-			String password = "1234";
-			Connection con = DriverManager.getConnection(url, user, password);
-			System.out.println("2. mySQL 연결 성공");
-			
-			String sql = "select * from member where id = ? and pw = ?";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, bag.getId());
-			ps.setString(2, bag.getPw());
-			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
-			
-			ResultSet rs = ps.executeQuery();
-			System.out.println("4. SQL문 mySQL로 보내기 성공");
-			if (rs.next()) {
-				System.out.println("검색결과 있음");
-				result = 1;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
 	
-	public MemberVO one(String id) {
+	public BookVO one(int id) {
 		ResultSet rs = null;
-		MemberVO bag = null;
+		BookVO bag = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("1. mySQL과 자바 연결할 부품 설정 성공");
@@ -100,26 +64,21 @@ public class MemberDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "select * from member where id = ?";
+			String sql = "select * from book where id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, id);
+			ps.setInt(1, id);
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			rs = ps.executeQuery();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
-			if (rs.next()) { //검색결과가 있는지 여부
+			if (rs.next()) {
 				System.out.println("검색결과 있음");
-				String id2 = rs.getString(1);
-				String pw = rs.getString(2);
-				String name = rs.getString(3);
-				String tel = rs.getString(4);
-				//System.out.println(id2 + " " + pw + " " + name + " " + tel);
 				
-				bag = new MemberVO();
-				bag.setId(id2);
-				bag.setPw(pw);
-				bag.setName(name);
-				bag.setTel(tel);
+				bag = new BookVO();
+				bag.setId(rs.getInt("id"));
+				bag.setName(rs.getString("name"));
+				bag.setUrl(rs.getString("url"));
+				bag.setImg(rs.getString("img"));
 				
 			} else {
 				System.out.println("검색결과 없음");
@@ -130,7 +89,7 @@ public class MemberDAO {
 		return bag;
 	}
 	
-	public int delete(String id) {
+	public int delete(int id) {
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -142,15 +101,15 @@ public class MemberDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "delete from member where id = ?";
+			String sql = "delete from book where id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, id);
+			ps.setInt(1, id);
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			result = ps.executeUpdate();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
 			if (result == 1) {
-				System.out.println("회원탈퇴처리 완료");
+				System.out.println("삭제 완료");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,7 +117,7 @@ public class MemberDAO {
 		return result;
 	}
 	
-	public int update(MemberVO bag) {
+	public int update(BookVO bag) {
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -170,16 +129,16 @@ public class MemberDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "update member set tel = ? where id = ?";
+			String sql = "update book set name = ? where id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, bag.getTel());
-			ps.setString(2, bag.getId());
+			ps.setString(1, bag.getName());
+			ps.setInt(2, bag.getId());
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			result = ps.executeUpdate();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
 			if (result == 1) {
-				System.out.println("회원수정처리 완료");
+				System.out.println("수정 완료");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,7 +146,7 @@ public class MemberDAO {
 		return result;
 	}
 	
-	public int insert(MemberVO bag) {
+	public int insert(BookVO bag) {
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -199,23 +158,27 @@ public class MemberDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "insert into member values (?, ?, ?, ?)";
+			String sql = "insert into book values (?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, bag.getId());
-			ps.setString(2, bag.getPw());
-			ps.setString(3, bag.getName());
-			ps.setString(4, bag.getTel());
+			//R빼고 인덱스 0부터 시작, 유일하게 db는 인덱스가 1부터 시작
+			//ps.setInt(1, bag.getNo());
+			ps.setInt(1, bag.getId());
+			ps.setString(2, bag.getName());
+			ps.setString(3, bag.getUrl());
+			ps.setString(4, bag.getImg());
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			result = ps.executeUpdate();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
 			if (result == 1) {
-				System.out.println("회원가입처리 완료");
+				System.out.println("등록 완료");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("북마크 등록 실패");
 		}
 		return result;
+
 	}
 
 }
