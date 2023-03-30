@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,26 +11,22 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<a href="bbs.jsp"><button class="btn btn-info">처음페이지로</button></a>
-<a href="list2"><button class="btn btn-warning">게시물 전체 목록페이지</button></a>
-<hr>
-<table class="table table-striped">
-	<tr>
-		<td width="150">no</td>
-		<td>${bag.no}</td>
+<h5>북마크 검색 결과</h5>
+<table class="table table-hover">
+	<tr class="table-warning">
+		<th>id</th>
+		<th>name</th>
+		<th>url</th>
+		<th>img</th>
 	</tr>
+	<c:forEach items="${list}" var="bag">
 	<tr>
-		<td>title</td>
-		<td>${bag.title}</td>
-	</tr>
-	<tr>
-		<td>content</td>
-		<td>${bag.content}</td>
-	</tr>
-	<tr>
-		<td>writer</td>
-		<td>${bag.writer}</td>
-	</tr>
+		<td>${bag.id}</td>
+		<td>${bag.name}</td>
+		<td><a href="${bag.url}">${bag.url}</a></td>
+		<td><img src="resources/img/${bag.img}" width="200"></td>
+	</tr>	
+	</c:forEach>
 </table>
 </body>
 </html>

@@ -4,32 +4,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Insert name here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<a href="bbs.jsp"><button class="btn btn-info">처음페이지로</button></a>
-<a href="list2"><button class="btn btn-warning">게시물 전체 목록페이지</button></a>
-<hr>
+공항 정보<hr>
 <table class="table table-striped">
 	<tr>
-		<td width="150">no</td>
-		<td>${bag.no}</td>
+		<td width="150">code</td>
+		<td>${bag.code}</td>
 	</tr>
 	<tr>
-		<td>title</td>
-		<td>${bag.title}</td>
+		<td>name</td>
+		<td>${bag.name}</td>
 	</tr>
 	<tr>
-		<td>content</td>
-		<td>${bag.content}</td>
+		<td>latitude</td>
+		<td>${bag.latitude}</td>
 	</tr>
 	<tr>
-		<td>writer</td>
-		<td>${bag.writer}</td>
+		<td>longitude</td>
+		<td>${bag.longitude}</td>
 	</tr>
 </table>
+<a href="delete4?code=${bag.code}">
+	<button class="btn btn-danger">삭제하기</button></a>
+<a href="update41.jsp?code=${bag.code}&name=${bag.name}">
+	<button class="btn btn-primary">수정하기</button>
+</a>
 </body>
 </html>

@@ -34,13 +34,9 @@ name: <input name="name"><br>
 </form>
 <hr color="blue">
 <h3>북마크 검색하기</h3>
+<a href="list3.multi">모든 북마크 가지고 오기</a><hr>
 <form action="one3.multi">
 id: <input name="id" value="1"><br>
-<button>서버로 전송</button>
-</form>
-<hr color="blue">
-<h3>북마크 전체검색하기</h3>
-<form action="list3.multi">
 <button>서버로 전송</button>
 </form>
 </body>

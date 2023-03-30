@@ -37,6 +37,7 @@
 </form>
 <hr color="red">
 <h3>회원검색 화면입니다.</h3>
+<a href="list">모든 회원정보 가지고 오기</a><hr>
 <form action="one" method="get">
 	id : <input name="id" value="apple"><br>
 	<button type="submit">서버로 전송</button>

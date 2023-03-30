@@ -34,7 +34,7 @@ public class BbsDAO {
 			rs = ps.executeQuery();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
 			while (rs.next()) { //검색결과가 있는지 여부
-				System.out.println("검색결과 있음");
+				//System.out.println("검색결과 있음");
 				int no = rs.getInt(1);
 				String title = rs.getString(2);
 				String content = rs.getString(3);

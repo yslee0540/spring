@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookDAO {
+public class AirportDAO {
 	
-	public ArrayList<BookVO> list() {
+	public ArrayList<AirportVO> list() {
 		ResultSet rs = null;
 		
-		//가방들 넣어줄 큰 컨테이너 역할
-		ArrayList<BookVO> list = new ArrayList<>();
-		BookVO bag = null;
+		ArrayList<AirportVO> list = new ArrayList<>();
+		AirportVO bag = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("1. mySQL과 자바 연결할 부품 설정 성공");
@@ -27,7 +26,7 @@ public class BookDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "select * from book";
+			String sql = "select * from airport";
 			PreparedStatement ps = con.prepareStatement(sql);
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
@@ -36,11 +35,11 @@ public class BookDAO {
 			while (rs.next()) { //검색결과가 있는지 여부
 				//System.out.println("검색결과 있음");
 				
-				bag = new BookVO();
-				bag.setId(rs.getInt("id"));
-				bag.setName(rs.getString("name"));
-				bag.setUrl(rs.getString("url"));
-				bag.setImg(rs.getString("img"));
+				bag = new AirportVO();
+				bag.setCode(rs.getString(1));
+				bag.setName(rs.getString(2));
+				bag.setLatitude(rs.getString(3));
+				bag.setLongitude(rs.getString(4));
 				
 				list.add(bag);
 			}
@@ -51,9 +50,9 @@ public class BookDAO {
 		return list;
 	}
 	
-	public BookVO one(int id) {
+	public AirportVO one(String code) {
 		ResultSet rs = null;
-		BookVO bag = null;
+		AirportVO bag = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("1. mySQL과 자바 연결할 부품 설정 성공");
@@ -64,21 +63,20 @@ public class BookDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "select * from book where id = ?";
+			String sql = "select * from airport where code = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, id);
+			ps.setString(1, code);
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			rs = ps.executeQuery();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
-			if (rs.next()) {
-				System.out.println("검색결과 있음");
+			if (rs.next()) { //검색결과가 있는지 여부
 				
-				bag = new BookVO();
-				bag.setId(rs.getInt("id"));
-				bag.setName(rs.getString("name"));
-				bag.setUrl(rs.getString("url"));
-				bag.setImg(rs.getString("img"));
+				bag = new AirportVO();
+				bag.setCode(rs.getString(1));
+				bag.setName(rs.getString(2));
+				bag.setLatitude(rs.getString(3));
+				bag.setLongitude(rs.getString(4));
 				
 			} else {
 				System.out.println("검색결과 없음");
@@ -89,7 +87,7 @@ public class BookDAO {
 		return bag;
 	}
 	
-	public int delete(int id) {
+	public int delete(String code) {
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -101,15 +99,15 @@ public class BookDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "delete from book where id = ?";
+			String sql = "delete from airport where code = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, id);
+			ps.setString(1, code);
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			result = ps.executeUpdate();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
 			if (result == 1) {
-				System.out.println("삭제 완료");
+				System.out.println("회원탈퇴처리 완료");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,7 +115,7 @@ public class BookDAO {
 		return result;
 	}
 	
-	public int update(BookVO bag) {
+	public int update(AirportVO bag) {
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -129,24 +127,24 @@ public class BookDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "update book set name = ? where id = ?";
+			String sql = "update airport set name = ? where code = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, bag.getName());
-			ps.setInt(2, bag.getId());
+			ps.setString(2, bag.getCode());
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			result = ps.executeUpdate();
 			System.out.println("4. SQL문 mySQL로 보내기 성공");
 			if (result == 1) {
-				System.out.println("수정 완료");
+				System.out.println("회원수정처리 완료");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	public int insert(BookVO bag) {
+
+	public int insert(AirportVO bag) {
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -158,14 +156,12 @@ public class BookDAO {
 			Connection con = DriverManager.getConnection(url, user, password);
 			System.out.println("2. mySQL 연결 성공");
 			
-			String sql = "insert into book values (?, ?, ?, ?)";
+			String sql = "insert into airport values (?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			//R빼고 인덱스 0부터 시작, 유일하게 db는 인덱스가 1부터 시작
-			//ps.setInt(1, bag.getNo());
-			ps.setInt(1, bag.getId());
+			ps.setString(1, bag.getCode());
 			ps.setString(2, bag.getName());
-			ps.setString(3, bag.getUrl());
-			ps.setString(4, bag.getImg());
+			ps.setString(3, bag.getLatitude());
+			ps.setString(4, bag.getLongitude());
 			System.out.println("3. SQL문 부품(객체)으로 만들어주기 성공");
 			
 			result = ps.executeUpdate();
@@ -175,10 +171,8 @@ public class BookDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("북마크 등록 실패");
 		}
 		return result;
-
 	}
 
 }
