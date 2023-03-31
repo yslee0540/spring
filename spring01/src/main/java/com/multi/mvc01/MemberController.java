@@ -2,6 +2,8 @@ package com.multi.mvc01;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +21,30 @@ public class MemberController {
 	//하나의 요청당 하나의 메서드
 	//요청된 주소가 어떻게 될 때 바로 아래에 있는 메서드가 호풀이 될지를 써주어야 함
 	@RequestMapping("login")
-	public String login(MemberVO bag) {
+	public String login(MemberVO bag, HttpSession session) {
 		System.out.println(bag);
 		int result = dao.login(bag);
 		if (result == 1) {
+			session.setAttribute("id", bag.getId());
 			return "ok";
+			//return "redirect:bbs.jsp";
 		} else {
 			//return "no";
 			//webapp 아래 member.jsp로 가고 싶은 경우
 			return "redirect:member.jsp";
 		}
+	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		session.setAttribute("id", null);
+		return "redirect:bbs.jsp";
+	}
+	
+	@RequestMapping("logout2")
+	public String logout3(HttpSession session) {
+		session.invalidate();
+		return "redirect:login.jsp";
 	}
 	
 	@RequestMapping("insert")

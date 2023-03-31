@@ -8,11 +8,10 @@
 </head>
 <body>
 <%
-if(session.getAttribute("count") == null) {
-	out.print("아무도 방문하지 않았습니다.");
-} else {
-	out.print("방문횟수: " + session.getAttribute("count") + "번");
-}
+	int count = (int)session.getAttribute("count");
+	count++;
+	session.setAttribute("count", count);
 %>
+현재 설정되어 있는 카운트 ${count}
 </body>
 </html>
