@@ -5,6 +5,15 @@ public class ReplyVO {
 	private int bbsno;
 	private String content;
 	private String writer;
+	private String date;
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	public int getNo() {
 		return no;
@@ -40,7 +49,8 @@ public class ReplyVO {
 
 	@Override
 	public String toString() {
-		return "ReplyVO [no=" + no + ", bbsno=" + bbsno + ", content=" + content + ", writer=" + writer + "]";
+		return "ReplyVO [no=" + no + ", bbsno=" + bbsno + ", content=" + content + ", writer=" + writer + ", date="
+				+ date + "]";
 	}
 
 }

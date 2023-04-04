@@ -11,16 +11,18 @@
 <script type="text/javascript">
 	$(function() {
 		$('#b1').click(function() {
+			content = $('#content').val()
+			writer = $('#writer').val()
 			$.ajax({
-				url: "insert2",
+				url: "insert21",
 				data: {
 					bbsno: "${bag.no}",
-					content: $('#content').val(),
-					writer: $('#writer').val()
+					content: content,
+					writer: writer
 				},
-				success: function(x) {
-					$('#result').html(x)
-					$('#content').val('')
+				success: function() {
+					$('#result').append("- " + content + ", " + writer + "<br>")
+					$('#content').val("")
 				}
 			})
 		})
@@ -60,24 +62,11 @@
 	<h6>댓글</h6>
 	내용: <input id="content"><br>
 	작성자: <input id="writer" value="apple">
-	<input id="b1" value="댓글달기" type="button"><br>
+	<input id="b1" value="댓글달기" type="button"><hr>
 	<div id="result">
-		<table class="table">
-			<tr class="table-success">
-				<td width="60">no</td>
-				<td>content</td>
-				<td>writer</td>
-				<td>date</td>
-			</tr>
-			<c:forEach items="${list}" var="x">
-				<tr>
-					<td>${x.no}</td>
-					<td>${x.content}</td>
-					<td>${x.writer}</td>
-					<td>${x.date}</td>
-				</tr>
-			</c:forEach>
-		</table>
+		<c:forEach items="${list}" var="x">
+			 - ${x.content}, ${x.writer}<br>
+		</c:forEach>
 	</div>
 </body>
 </html>

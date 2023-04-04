@@ -21,33 +21,39 @@ public class BbsController {
 		dao.insert(bag);
 	}
 	
-	@RequestMapping("insert")
-	public void insert(ReplyVO bag, Model model) {
-		dao2.insert(bag);
-		ArrayList<ReplyVO> list = dao2.list(bag.getBbsno());
-		model.addAttribute("list", list);
-	}
-	
-	@RequestMapping("update2.multi")
+	@RequestMapping("update2")
 	public void update(BbsVO bag) {
 		dao.update(bag);
 	}
 	
-	@RequestMapping("delete2.multi")
+	@RequestMapping("delete2")
 	public void delete(int no, BbsDAO dao) {
 		dao.delete(no);
 	}
 	
 	@RequestMapping("one2.multi")
-	public void one(int no, Model model) {
+	public String one(int no, Model model) {
 		BbsVO bag = dao.one(no);
 		model.addAttribute("bag", bag);
 		ArrayList<ReplyVO> list = dao2.list(no);
 		model.addAttribute("list", list);
+		return "one21";
+	}
+	
+	@RequestMapping("one4")
+	public void one4(int no, Model model) {
+		BbsVO bag = dao.one(no);
+		model.addAttribute("bag", bag);
 	}
 	
 	@RequestMapping("list2")
 	public void list(Model model) {
+		ArrayList<BbsVO> list = dao.list();
+		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping("list3")
+	public void list3(Model model) {
 		ArrayList<BbsVO> list = dao.list();
 		model.addAttribute("list", list);
 	}
