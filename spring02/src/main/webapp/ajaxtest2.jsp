@@ -12,7 +12,7 @@
 <script type="text/javascript">
 lat = '';
 lon = '';
-if (navigator.geolocation) {
+	if (navigator.geolocation) {
 	  navigator.geolocation.getCurrentPosition(showPosition);
 	} else {
 	  console.log("Geolocation is not supported by this browser.");
@@ -66,9 +66,24 @@ if (navigator.geolocation) {
 					f = doc.current.feels_like
 					c = doc.current.clouds
 					w = doc.current.wind_speed
-					$('#result').append("위치: " + l + "<br>온도: " + t + "<br>체감온도: " + f +
+					$('#result').append("timezone: " + l + "<br>온도: " + t + "<br>체감온도: " + f +
 										"<br>구름: " + c + "<br>풍속: " + w )
-				}//success
+				}
+			})
+		})
+		$('#b4').click(function() {
+			$('#result').empty()
+			$.ajax({
+				url:'http://api.openweathermap.org/data/2.5/weather?q=seoul&units=metric&lang=kr&appid=43238037f8f84c1b9d70369513a425e6',
+				success: function(x){
+					$('#result').html("위치: "+x.name+"<br>"+
+							"날씨: "+x.weather[0].description+"<br>"+
+							"풍속: "+x.wind.speed+"<br>"+
+							"최고 기온: "+x.main.temp_max+"<br>"+
+							"최저 기온: "+x.main.temp_min+"<br>"+
+							"체감 온도: "+x.main.feels_like+"<br>"+
+							"구름: "+x.clouds.all+"<br>")
+				}
 			})
 		})
 	})
@@ -80,7 +95,8 @@ content: <input id="content">
 <button id="b1">bbs수정</button><br>
 no: <input id="no2" value="9" style="width:100px;">
 <button id="b2">bbs삭제</button><br>
-<button id="b3">날씨정보 가지고 오기</button><br>
+<button id="b3">날씨정보 가지고 오기(현재위치)</button>
+<button id="b4">날씨정보 가지고 오기(서울)</button><br>
 <hr color="red">
 <div id="result"></div>
 </body>

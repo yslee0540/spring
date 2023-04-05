@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MemberController {
@@ -54,5 +55,19 @@ public class MemberController {
 	public void list(Model model) {
 		ArrayList<MemberVO> list = dao.list();
 		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping("jsonResponse3")
+	@ResponseBody
+	public MemberVO jsonResponse3(String id) {
+		MemberVO bag = dao.one(id);
+		return bag;
+	}
+	
+	@RequestMapping("jsonResponse4")
+	@ResponseBody
+	public ArrayList<MemberVO> jsonResponse3() {
+		ArrayList<MemberVO> list = dao.list();
+		return list;
 	}
 }
