@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>json</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed39086327d2b4332a5533af606ec521"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey="></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -19,7 +19,6 @@
 				},
 				success: function(json) {
 					$('#result').empty()
-					$('#chart_div').empty()
 					$('#map').empty()
 					id = json.id
 					pw = json.pw
@@ -40,7 +39,6 @@
 				dataType: "json",
 				success: function(json) {
 					$('#result').empty()
-					$('#chart_div').empty()
 					$('#map').empty()
 					for (var i = 0; i < json.length; i++) {
 						id = json[i].id
@@ -58,7 +56,6 @@
 				dataType: "json",
 				success: function(json) {
 					$('#result').empty()
-					$('#chart_div').empty()
 					$('#map').empty()
 					$('#result').append("<table cellspacing=0>" + 
 							"<tr><td class=t1>id</td><td class=t1>pw</td>" + 
@@ -81,31 +78,33 @@
 				dataType: "json",
 				success: function(json) {
 					$('#result').empty()
-					$('#chart_div').empty()
 					$('#map').empty()
-					$('#result').append(json.location)
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    
-						mapOption = {
-								center : new kakao.maps.LatLng(json.lat, json.lon), // 지도의 중심좌표
-								level : 3 // 지도의 확대 레벨
-							};
-
-							var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-							// 마커가 표시될 위치입니다 
-							var markerPosition = new kakao.maps.LatLng(json.lat, json.lon);
-
-							// 마커를 생성합니다
-							var marker = new kakao.maps.Marker({
-								position : markerPosition
-							});
-
-							// 마커가 지도 위에 표시되도록 설정합니다
-							marker.setMap(map);
-
-							// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-							// marker.setMap(null);     
+					for (var i = 0; i < json.length; i++) {
+						if (json[i].location == $('#loc').val()) {
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    
+							mapOption = {
+									center : new kakao.maps.LatLng(json[i].lat, json[i].lon), // 지도의 중심좌표
+									level : 3 // 지도의 확대 레벨
+								};
+	
+								var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+								// 마커가 표시될 위치입니다 
+								var markerPosition = new kakao.maps.LatLng(json[i].lat, json[i].lon);
+	
+								// 마커를 생성합니다
+								var marker = new kakao.maps.Marker({
+									position : markerPosition
+								});
+	
+								// 마커가 지도 위에 표시되도록 설정합니다
+								marker.setMap(map);
+	
+								// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+								// marker.setMap(null);     
+						}
+					}
 				}
 			})
 		})
@@ -113,23 +112,34 @@
 			$.ajax({
 				url: "jsonResponse6",
 				dataType: "json",
-				success: function(json) {
+				success: function(list) {
 					$('#result').empty()
-					$('#chart_div').empty()
 					$('#map').empty()
 					google.charts.load('current', {packages: ['corechart', 'bar']});
 					google.charts.setOnLoadCallback(drawBasic);
 					
 					function drawBasic() {
+						var arr2 = new Array(list.length + 1);
+					    var header = ["영화", "평점"];
+					    arr2[0] = header
+						//2차원배열은 배열을 만들어서
+						//1차원을 2차원배열에 하나씩 끼면 됨.
+						for(i = 0; i < list.length; i++){
+					    	one = new Array(2)
+					    	one[0] = list[i].movie;
+					    	one[1] = list[i].score;
+					    	arr2[i + 1] = one
+						}
+				        var data = google.visualization.arrayToDataTable(arr2);
 					
-					      var data = google.visualization.arrayToDataTable([
+					      /* var data = google.visualization.arrayToDataTable([
 					        ['영화', '평점',],
-					        [json[0].movie, json[0].score],
-					        [json[1].movie, json[1].score],
-					        [json[2].movie, json[2].score],
-					        [json[3].movie, json[3].score],
-					        [json[4].movie, json[4].score]
-					      ]);
+					        [list[0].movie, list[0].score],
+					        [list[1].movie, list[1].score],
+					        [list[2].movie, list[2].score],
+					        [list[3].movie, list[3].score],
+					        [list[4].movie, list[4].score]
+					      ]); */
 					
 					      var options = {
 					        title: '',
@@ -143,7 +153,7 @@
 					        }
 					      };
 					
-					      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+					      var chart = new google.visualization.BarChart(document.getElementById('result'));
 					
 					      chart.draw(data, options);
 					 }
@@ -166,12 +176,11 @@ td {
 <button id="b1">member JSON을 받아오자</button>
 <button id="b2">member JSONArray(text)를 받아오자</button>
 <button id="b21">member JSONArray(table)을 받아오자</button><br>
-<!-- <input id="loc" value="코엑스"> -->
+<input id="loc" value="코엑스">
 <button id="b3">지도 나타내기</button>
 <button id="b4">차트 나타내기</button><br>
 <hr color="red">
 <div id="result"></div>
-<div id="chart_div"></div>
 <div id="map" style="width:500px;height:350px;"></div>
 </body>
 </html>

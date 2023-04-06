@@ -77,39 +77,48 @@ public class RestController {
 	
 	@RequestMapping("jsonResponse5")
 	@ResponseBody
-	public RestVO jsonResponse5() {
-		RestVO bag = new RestVO();
+	public ArrayList<MapVO> jsonResponse5() {
+		MapVO bag = new MapVO();
 		bag.setLocation("코엑스");
 		bag.setLat(37.5116);
 		bag.setLon(127.0591);
 		
-		return bag;
+		MapVO bag2 = new MapVO();
+		bag2.setLocation("부산역");
+		bag2.setLat(35.1152);
+		bag2.setLon(129.042);
+		
+		ArrayList<MapVO> list = new ArrayList<MapVO>();
+		list.add(bag);
+		list.add(bag2);
+		
+		return list;
 	}
 	
 	@RequestMapping("jsonResponse6")
 	@ResponseBody
-	public ArrayList<RestVO> jsonResponse6() {
-		RestVO bag = new RestVO();
+	public ArrayList<ChartVO> jsonResponse6() {
+		ChartVO bag = new ChartVO();
 		bag.setMovie("리바운드");
 		bag.setScore(9.25);
 		
-		RestVO bag2 = new RestVO();
+		ChartVO bag2 = new ChartVO();
 		bag2.setMovie("스즈메의 문단속");
 		bag2.setScore(8.11);
 		
-		RestVO bag3 = new RestVO();
+		ChartVO bag3 = new ChartVO();
 		bag3.setMovie("에어");
 		bag3.setScore(9.00);
 		
-		RestVO bag4 = new RestVO();
+		ChartVO bag4 = new ChartVO();
 		bag4.setMovie("던전 앤 드래곤");
 		bag4.setScore(8.18);
 		
-		RestVO bag5 = new RestVO();
+		ChartVO bag5 = new ChartVO();
 		bag5.setMovie("웅남이");
 		bag5.setScore(7.69);
 		
-		ArrayList<RestVO> list = new ArrayList<RestVO>();
+		ArrayList<ChartVO> list = new ArrayList<ChartVO>();
 		list.add(bag);
 		list.add(bag2);
 		list.add(bag3);
