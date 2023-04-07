@@ -7,10 +7,12 @@
    <typeAliases>
       <typeAlias type="com.multi.mvc03.MemberVO" alias="memberVO"></typeAlias>
       <typeAlias type="com.multi.mvc03.BbsVO" alias="bbsVO"></typeAlias>
+      <typeAlias type="com.multi.mvc03.BookVO" alias="bookVO"></typeAlias>
    </typeAliases>
    <mappers>
    <!-- SQL문 정의하는 파일들의 목록을 지정. -->
       <mapper resource="mapper/memberMapper.xml" />
       <mapper resource="mapper/bbsMapper.xml" />
+      <mapper resource="mapper/bookMapper.xml" />
    </mappers>
 </configuration>

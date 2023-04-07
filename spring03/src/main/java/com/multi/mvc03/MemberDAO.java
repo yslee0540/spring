@@ -15,11 +15,11 @@ public class MemberDAO {
 	public List<MemberVO> list() {
 		return my.selectList("member.all");
 	}
-//
-//	public int login(MemberVO vo) {
-//		int result = my.selectOne("sql", vo);
-//		return result;
-//	}
+
+	public int login(MemberVO vo) {
+		int result = my.selectOne("member.login", vo);
+		return result;
+	}
 	
 	public MemberVO one(String id) {
 		MemberVO vo = my.selectOne("member.one", id);

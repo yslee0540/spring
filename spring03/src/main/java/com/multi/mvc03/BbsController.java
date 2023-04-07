@@ -14,6 +14,7 @@ public class BbsController {
 	
 	@RequestMapping("insert2.multi")
 	public void insert(BbsVO bag) {
+		System.out.println(dao);
 		dao.insert(bag);
 	}
 	
@@ -26,13 +27,13 @@ public class BbsController {
 	public void delete(int no) {
 		dao.delete(no);
 	}
-//	
-//	@RequestMapping("one2.multi")
-//	public void one(int no, Model model) {
-//		BbsVO bag = dao.one(no);
-//		model.addAttribute("bag", bag);
-//	}
-//	
+	
+	@RequestMapping("one2.multi")
+	public void one(int no, Model model) {
+		BbsVO bag = dao.one(no);
+		model.addAttribute("bag", bag);
+	}
+	
 //	@RequestMapping("list2")
 //	public void list(Model model) {
 //		ArrayList<BbsVO> list = dao.list();

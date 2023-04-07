@@ -2,6 +2,8 @@ package com.multi.mvc03;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +14,16 @@ public class MemberController {
 	@Autowired
 	MemberDAO dao; 
 	
-//	@RequestMapping("login")
-//	public String login(MemberVO bag, HttpSession session) {
-//		int result = dao.login(bag);
-//		if (result == 1) {
-//			session.setAttribute("id", bag.getId());
-//			return "insert";
-//		} else {
-//			return "redirect:member.jsp";
-//		}
-//	}
+	@RequestMapping("login")
+	public String login(MemberVO bag, HttpSession session) {
+		int result = dao.login(bag);
+		if (result == 1) {
+			session.setAttribute("id", bag.getId());
+			return "insert";
+		} else {
+			return "redirect:member.jsp";
+		}
+	}
 	
 	@RequestMapping("insert")
 	public void insert(MemberVO bag) {
