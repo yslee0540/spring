@@ -7,9 +7,12 @@
      별명을 지어서 사용 -->
    <typeAliases>
       <typeAlias type="com.multi.fileupload.MovieVO" alias="movieVO"></typeAlias>
+      <typeAlias type="com.multi.fileupload.BbsVO" alias="bbsVO"></typeAlias>
+      <typeAlias type="com.multi.fileupload.PageVO" alias="pageVO"></typeAlias>
    </typeAliases>
    <mappers>
    <!-- SQL문 정의하는 파일들의 목록을 지정. -->
       <mapper resource="mapper/movieMapper.xml" />
+      <mapper resource="mapper/bbs.xml" />
    </mappers>
 </configuration>
